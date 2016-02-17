@@ -8,8 +8,8 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Integer Images[] = {R.drawable.messi1,R.drawable.messi2,R.drawable.messi3,R.drawable.messi4};
-    private Integer counter = 0;
+    private Integer curImage = R.drawable.messi1;
+    private Integer counter = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setInitialImage(){
 
-        setImage(Images[0]);
+        setImage(curImage);
     }
 
     private void switchImage(){
@@ -38,14 +38,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 counter++;
-                System.out.println("inside onclick event");
-                if(counter > 3){
+                if(counter > 4){
 
-                    counter = 0;
+                    counter = 1;
                 }
-                //Integer newImageId = getResources().getIdentifier("messi"+counter++,"drawable",getPackageName());
-                setImage(Images[counter]);
+                System.out.println("Inside");
+                drawImage(counter);
             }
         });
+    }
+
+    private void drawImage(Integer count){
+
+        final Integer c = count;
+        new Thread(){
+            public void run(){
+
+                final Integer newImageId = getResources().getIdentifier("messi"+c,"drawable",getPackageName());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final ImageView imageview = (ImageView)findViewById(R.id.Display);
+                        imageview.setImageResource(newImageId);
+                    }
+                });
+            }
+
+        }.start();
+
+
+
     }
 }
