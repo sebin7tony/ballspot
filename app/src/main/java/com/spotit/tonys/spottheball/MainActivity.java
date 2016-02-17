@@ -8,8 +8,8 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Integer curImage = R.drawable.messi1;
-    private Integer counter = 1;
+    private Integer Images[] = {R.drawable.messi1,R.drawable.messi2,R.drawable.messi3,R.drawable.messi4};
+    private Integer counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setInitialImage(){
 
-        setImage(curImage);
+        setImage(Images[0]);
     }
 
     private void switchImage(){
@@ -37,12 +37,14 @@ public class MainActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(counter > 4){
+                counter++;
+                System.out.println("inside onclick event");
+                if(counter > 3){
 
-                    counter = 1;
+                    counter = 0;
                 }
-                Integer newImageId = getResources().getIdentifier("messi"+counter++,"drawable",getPackageName());
-                setImage(newImageId);
+                //Integer newImageId = getResources().getIdentifier("messi"+counter++,"drawable",getPackageName());
+                setImage(Images[counter]);
             }
         });
     }
